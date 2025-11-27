@@ -12,8 +12,8 @@ from buttons import button_callback
 from admin import admin_panel, admin_callback_handler
 from admin_broadcast import admin_send_broadcast, confirmar_broadcast
 
-def post_init(application: Application) -> None:
-    application.bot.set_my_commands([
+async def post_init(application: Application) -> None:
+    await application.bot.set_my_commands([
         BotCommand("start", "Menu principal"),
         BotCommand("ajuda", "Como usar o bot"),
         BotCommand("cancelar", "Cancelar operação atual"),

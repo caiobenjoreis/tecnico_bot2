@@ -9,6 +9,11 @@ class _Handler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(b"OK")
 
+    def do_HEAD(self):
+        self.send_response(200)
+        self.send_header("Content-Type", "text/plain; charset=utf-8")
+        self.end_headers()
+
 def _run_server():
     port = int(os.getenv("PORT", "8000"))
     server = HTTPServer(("0.0.0.0", port), _Handler)
