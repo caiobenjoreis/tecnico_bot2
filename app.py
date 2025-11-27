@@ -13,6 +13,7 @@ from admin import admin_panel, admin_callback_handler
 from admin_broadcast import admin_send_broadcast, confirmar_broadcast
 
 async def post_init(application: Application) -> None:
+    await application.bot.delete_webhook(drop_pending_updates=True)
     await application.bot.set_my_commands([
         BotCommand("start", "Menu principal"),
         BotCommand("ajuda", "Como usar o bot"),
@@ -64,7 +65,7 @@ def main():
     app.add_handler(conv)
     app.add_handler(CallbackQueryHandler(admin_callback_handler, pattern=r"^(admin_|broadcast_)"))
     keep_alive()
-    app.run_polling()
+    app.run_polling(drop_pending_updates=True)
 
 if __name__ == "__main__":
     main()
