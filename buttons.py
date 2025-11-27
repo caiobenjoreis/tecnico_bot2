@@ -1,10 +1,9 @@
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes
-from ui.keyboards import main_menu
-from core.constants import AGUARDANDO_SA, AGUARDANDO_TIPO, AGUARDANDO_FOTOS, AGUARDANDO_DATA_INICIO, TZ
-from services.supabase_client import carregar_dados
-from services.reports import ciclo_atual, montar_msg_producao, gerar_relatorio_mensal, gerar_relatorio_semanal, gerar_relatorio_hoje, gerar_ranking_tecnicos
-from handlers.reports import menu_relatorios
+from keyboards import main_menu
+from constants import AGUARDANDO_SA, AGUARDANDO_TIPO, AGUARDANDO_FOTOS, AGUARDANDO_DATA_INICIO, TZ
+from supabase_client import carregar_dados
+from reports import ciclo_atual, montar_msg_producao, gerar_relatorio_mensal, gerar_relatorio_semanal, gerar_relatorio_hoje, gerar_ranking_tecnicos, menu_relatorios
 
 async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
@@ -88,7 +87,7 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
         if not instalacoes_user:
             await query.answer("Nenhuma instalação encontrada.", show_alert=True)
             return None
-        from ..core.constants import PONTOS_SERVICO
+        from constants import PONTOS_SERVICO
         msg = f"Detalhes do Ciclo ({inicio_dt.strftime('%d/%m')} - {fim_dt.strftime('%d/%m')})\n\n"
         for inst in sorted(instalacoes_user, key=lambda x: x["data"], reverse=True):
             tipo = inst.get("tipo", "Instalação")

@@ -1,7 +1,7 @@
 from typing import Any, Dict, List, Optional
 from supabase import create_client
-from .util import now_str
-from core.config import SUPABASE_URL, SUPABASE_KEY, USE_SUPABASE
+from util import now_str
+from config import SUPABASE_URL, SUPABASE_KEY, USE_SUPABASE
 
 _CLIENT = None
 

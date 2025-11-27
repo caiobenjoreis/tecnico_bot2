@@ -1,9 +1,9 @@
 from collections import defaultdict
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes
-from core.constants import AGUARDANDO_SA, AGUARDANDO_GPON, AGUARDANDO_TIPO, AGUARDANDO_SERIAL, AGUARDANDO_FOTOS, PONTOS_SERVICO
-from services.supabase_client import salvar_instalacao
-from services.util import now_str
+from constants import AGUARDANDO_SA, AGUARDANDO_GPON, AGUARDANDO_TIPO, AGUARDANDO_SERIAL, AGUARDANDO_FOTOS, PONTOS_SERVICO
+from supabase_client import salvar_instalacao
+from util import now_str
 
 def tipos_keyboard():
     k = [

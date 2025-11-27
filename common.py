@@ -1,6 +1,6 @@
 from telegram import Update
 from telegram.ext import ContextTypes
-from ui.keyboards import main_menu
+from keyboards import main_menu
 
 async def ajuda(update: Update, context: ContextTypes.DEFAULT_TYPE):
     msg = (

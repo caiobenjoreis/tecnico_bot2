@@ -2,8 +2,8 @@ from datetime import datetime, timedelta
 from collections import defaultdict
 from telegram import Update
 from telegram.ext import ContextTypes
-from core.constants import TZ, TABELA_FAIXAS, PONTOS_SERVICO, AGUARDANDO_DATA_INICIO, AGUARDANDO_DATA_FIM
-from services.supabase_client import carregar_dados
+from constants import TZ, TABELA_FAIXAS, PONTOS_SERVICO, AGUARDANDO_DATA_INICIO, AGUARDANDO_DATA_FIM
+from supabase_client import carregar_dados
 
 def calcular_pontos(instalacoes):
     total = 0.0

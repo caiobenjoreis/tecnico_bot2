@@ -2,10 +2,10 @@ from collections import defaultdict
 from datetime import datetime, timedelta
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, BotCommand
 from telegram.ext import ContextTypes
-from core.constants import TZ, ADMIN_IDS
-from services.supabase_client import carregar_dados, carregar_usuarios
-from ui.keyboards import admin_menu
-from handlers.admin_broadcast import admin_broadcast_start
+from constants import TZ, ADMIN_IDS
+from supabase_client import carregar_dados, carregar_usuarios
+from keyboards import admin_menu
+from admin_broadcast import admin_broadcast_start
 
 def is_admin(uid: int) -> bool:
     return uid in ADMIN_IDS
@@ -74,7 +74,7 @@ async def admin_export_data(query):
 async def admin_manage_admins(query):
     msg = (
         "Gerenciar Administradores\n\n"
-        "Edite a lista ADMIN_IDS em novo_bot/core/constants.py e faça deploy.\n"
+        "Edite a lista ADMIN_IDS em constants.py e faça deploy.\n"
         "Para descobrir um ID use /meuid."
     )
     await query.edit_message_text(msg)

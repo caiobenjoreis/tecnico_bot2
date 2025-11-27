@@ -1,8 +1,8 @@
 from telegram import Update
 from telegram.ext import ContextTypes
-from core.constants import AGUARDANDO_NOME, AGUARDANDO_SOBRENOME, AGUARDANDO_REGIAO
-from services.supabase_client import carregar_usuarios, salvar_usuario
-from ui.keyboards import main_menu
+from constants import AGUARDANDO_NOME, AGUARDANDO_SOBRENOME, AGUARDANDO_REGIAO
+from supabase_client import carregar_usuarios, salvar_usuario
+from keyboards import main_menu
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.message.from_user.id

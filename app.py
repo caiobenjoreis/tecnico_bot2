@@ -2,15 +2,15 @@ import re
 from telegram import BotCommand
 from telegram.ext import Application, CommandHandler, MessageHandler, CallbackQueryHandler, ConversationHandler, filters
 from keep_alive import keep_alive
-from core.config import get_token, USE_SUPABASE
-from core.constants import AGUARDANDO_SA, AGUARDANDO_GPON, AGUARDANDO_TIPO, AGUARDANDO_SERIAL, AGUARDANDO_FOTOS, AGUARDANDO_DATA_INICIO, AGUARDANDO_DATA_FIM, AGUARDANDO_SOBRENOME, AGUARDANDO_REGIAO, AGUARDANDO_CONSULTA, AGUARDANDO_BROADCAST, AGUARDANDO_CONFIRMACAO_BROADCAST
-from handlers.common import ajuda, cancelar, meu_id
-from handlers.registration import start, receber_nome, receber_sobrenome, receber_regiao
-from handlers.installation import receber_sa, receber_gpon, receber_tipo, receber_serial, receber_foto, finalizar, comando_reparo
-from handlers.query_prod import comando_consultar, consultar, iniciar_producao, receber_data_inicio, receber_data_fim
-from handlers.buttons import button_callback
-from handlers.admin import admin_panel, admin_callback_handler
-from handlers.admin_broadcast import admin_send_broadcast, confirmar_broadcast
+from config import get_token, USE_SUPABASE
+from constants import AGUARDANDO_SA, AGUARDANDO_GPON, AGUARDANDO_TIPO, AGUARDANDO_SERIAL, AGUARDANDO_FOTOS, AGUARDANDO_DATA_INICIO, AGUARDANDO_DATA_FIM, AGUARDANDO_SOBRENOME, AGUARDANDO_REGIAO, AGUARDANDO_CONSULTA, AGUARDANDO_BROADCAST, AGUARDANDO_CONFIRMACAO_BROADCAST
+from common import ajuda, cancelar, meu_id
+from registration import start, receber_nome, receber_sobrenome, receber_regiao
+from installation import receber_sa, receber_gpon, receber_tipo, receber_serial, receber_foto, finalizar, comando_reparo
+from query_prod import comando_consultar, consultar, iniciar_producao, receber_data_inicio, receber_data_fim
+from buttons import button_callback
+from admin import admin_panel, admin_callback_handler
+from admin_broadcast import admin_send_broadcast, confirmar_broadcast
 
 def post_init(application: Application) -> None:
     application.bot.set_my_commands([
@@ -52,7 +52,7 @@ def main():
         },
         fallbacks=[CommandHandler("cancelar", cancelar)],
     )
-    from handlers.reports import comando_mensal, comando_semanal, comando_hoje
+    from reports import comando_mensal, comando_semanal, comando_hoje
     app.add_handler(CommandHandler("ajuda", ajuda))
     app.add_handler(CommandHandler("meuid", meu_id))
     app.add_handler(CommandHandler("mensal", comando_mensal))

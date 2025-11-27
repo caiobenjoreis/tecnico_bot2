@@ -1,7 +1,7 @@
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes
-from core.constants import AGUARDANDO_BROADCAST, AGUARDANDO_CONFIRMACAO_BROADCAST
-from services.supabase_client import carregar_usuarios
+from constants import AGUARDANDO_BROADCAST, AGUARDANDO_CONFIRMACAO_BROADCAST
+from supabase_client import carregar_usuarios
 
 async def admin_broadcast_start(query):
     await query.edit_message_text("Envie a mensagem para todos")
@@ -9,7 +9,7 @@ async def admin_broadcast_start(query):
 
 async def admin_send_broadcast(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.message.from_user.id
-    from .admin import is_admin
+    from admin import is_admin
     if not is_admin(user_id):
         await update.message.reply_text("❌ Acesso negado")
         return AGUARDANDO_BROADCAST
