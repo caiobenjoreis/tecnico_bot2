@@ -8,6 +8,8 @@ services:
     buildCommand: "pip install -U pip && pip install -r requirements.txt"
     startCommand: "python app.py"
     envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.6
       - key: TELEGRAM_TOKEN
         sync: false
       - key: SUPABASE_URL
