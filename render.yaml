@@ -1,0 +1,14 @@
+services:
+  - type: worker
+    name: novo-bot
+    env: python
+    buildCommand: "pip install -U pip && pip install -r requirements.txt"
+    startCommand: "python app.py"
+    autoDeploy: true
+    envVars:
+      - key: TELEGRAM_TOKEN
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_KEY
+        sync: false
