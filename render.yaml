@@ -1,10 +1,12 @@
 services:
-  - type: worker
+  - type: web
     name: novo-bot
     env: python
+    plan: free
+    autoDeploy: true
+    healthCheckPath: /
     buildCommand: "pip install -U pip && pip install -r requirements.txt"
     startCommand: "python app.py"
-    autoDeploy: true
     envVars:
       - key: TELEGRAM_TOKEN
         sync: false
