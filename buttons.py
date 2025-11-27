@@ -1,7 +1,7 @@
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes
 from keyboards import main_menu
-from constants import AGUARDANDO_SA, AGUARDANDO_TIPO, AGUARDANDO_FOTOS, AGUARDANDO_DATA_INICIO, TZ
+from constants import AGUARDANDO_SA, AGUARDANDO_TIPO, AGUARDANDO_FOTOS, AGUARDANDO_DATA_INICIO, AGUARDANDO_CONSULTA, TZ
 from supabase_client import carregar_dados
 from reports import ciclo_atual, montar_msg_producao, gerar_relatorio_mensal, gerar_relatorio_semanal, gerar_relatorio_hoje, gerar_ranking_tecnicos, menu_relatorios
 
@@ -18,7 +18,7 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return AGUARDANDO_SA
     if query.data == "consultar":
         await query.edit_message_text("Envie SA ou GPON")
-        return None
+        return AGUARDANDO_CONSULTA
     if query.data == "minhas":
         dados = carregar_dados()
         user_id = query.from_user.id
@@ -41,8 +41,9 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
         for d in dados:
             try:
                 from datetime import datetime as _dt
-                data_inst = _dt.strptime(d["data"], "%d/%m/%Y %H:%M").replace(tzinfo=None)
-                if d.get("tecnico_id") == user_id:
+                dt_naive = _dt.strptime(d["data"], "%d/%m/%Y %H:%M")
+                dt = dt_naive.replace(tzinfo=TZ)
+                if d.get("tecnico_id") == user_id and inicio_dt <= dt <= fim_dt:
                     instalacoes_user.append(d)
             except:
                 pass
@@ -98,5 +99,8 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
         if len(msg) > 4000:
             msg = msg[:4000] + "\n\n(Lista truncada)"
         await query.edit_message_text(msg)
+        return None
+    if query.data == "voltar":
+        await query.edit_message_text("Menu", reply_markup=main_menu())
         return None
     await query.edit_message_text("Menu", reply_markup=main_menu())
