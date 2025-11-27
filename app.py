@@ -3,7 +3,7 @@ from telegram import BotCommand
 from telegram.ext import Application, CommandHandler, MessageHandler, CallbackQueryHandler, ConversationHandler, filters
 from keep_alive import keep_alive
 from config import get_token, USE_SUPABASE
-from constants import AGUARDANDO_SA, AGUARDANDO_GPON, AGUARDANDO_TIPO, AGUARDANDO_SERIAL, AGUARDANDO_FOTOS, AGUARDANDO_DATA_INICIO, AGUARDANDO_DATA_FIM, AGUARDANDO_SOBRENOME, AGUARDANDO_REGIAO, AGUARDANDO_CONSULTA, AGUARDANDO_BROADCAST, AGUARDANDO_CONFIRMACAO_BROADCAST
+from constants import AGUARDANDO_SA, AGUARDANDO_GPON, AGUARDANDO_TIPO, AGUARDANDO_SERIAL, AGUARDANDO_FOTOS, AGUARDANDO_DATA_INICIO, AGUARDANDO_DATA_FIM, AGUARDANDO_NOME, AGUARDANDO_SOBRENOME, AGUARDANDO_REGIAO, AGUARDANDO_CONSULTA, AGUARDANDO_BROADCAST, AGUARDANDO_CONFIRMACAO_BROADCAST
 from common import ajuda, cancelar, meu_id
 from registration import start, receber_nome, receber_sobrenome, receber_regiao
 from installation import receber_sa, receber_gpon, receber_tipo, receber_serial, receber_foto, finalizar, comando_reparo
@@ -37,6 +37,7 @@ def main():
     conv = ConversationHandler(
         entry_points=[CommandHandler("start", start), CommandHandler("producao", iniciar_producao), CommandHandler("consultar", comando_consultar), CallbackQueryHandler(button_callback)],
         states={
+            AGUARDANDO_NOME: [MessageHandler(filters.TEXT & ~filters.COMMAND, receber_nome)],
             AGUARDANDO_SA: [MessageHandler(filters.TEXT & ~filters.COMMAND, receber_sa)],
             AGUARDANDO_GPON: [MessageHandler(filters.TEXT & ~filters.COMMAND, receber_gpon)],
             AGUARDANDO_TIPO: [CallbackQueryHandler(receber_tipo)],
@@ -60,8 +61,8 @@ def main():
     app.add_handler(CommandHandler("hoje", comando_hoje))
     app.add_handler(CommandHandler("reparo", comando_reparo))
     app.add_handler(CommandHandler("admin", admin_panel))
-    app.add_handler(CallbackQueryHandler(admin_callback_handler))
     app.add_handler(conv)
+    app.add_handler(CallbackQueryHandler(admin_callback_handler, pattern=r"^(admin_|broadcast_)"))
     keep_alive()
     app.run_polling()
 
